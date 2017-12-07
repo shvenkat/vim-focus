@@ -34,13 +34,6 @@ endfunction
 " Revert to original colorscheme.
 function! s:reset_colorscheme()
     execute "colorscheme " . g:colors_name
-
-    " Fix neomake sign background to match the sign column.
-    let l:margin_bg = synIDattr(synIDtrans(hlID('SignColumn')), 'bg')
-    execute "highlight! NeomakeMessageSign ctermfg=4 ctermbg=" . l:margin_bg
-    execute "highlight! NeomakeInfoSign    ctermfg=2 ctermbg=" . l:margin_bg
-    execute "highlight! NeomakeWarningSign ctermfg=3 ctermbg=" . l:margin_bg
-    execute "highlight! NeomakeErrorSign   ctermfg=1 ctermbg=" . l:margin_bg
 endfunction
 
 " Save original margin settings.
