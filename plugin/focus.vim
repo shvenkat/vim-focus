@@ -53,7 +53,7 @@ function! s:calculate_new_margins()
     else
         let l:focus_width = &textwidth
     endif
-    let l:desired_margin = (&columns - l:focus_width)/2
+    let l:desired_margin = (winwidth(0) - l:focus_width)/2
     let l:left_margin = max([4 + 2 + 0, min([10 + 2 + 12, l:desired_margin])])
 
     let s:number = 0
