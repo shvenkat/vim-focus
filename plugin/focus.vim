@@ -21,9 +21,6 @@ function! s:patch_colorscheme()
     execute "highlight! NeomakeWarningSign ctermfg=3 ctermbg=" . l:margin_bg
     execute "highlight! NeomakeErrorSign   ctermfg=1 ctermbg=" . l:margin_bg
 
-    " Make folds (and folded line numbers) less conspicuous.
-    highlight! link Folded LineNr
-
     " Make split dividers less conspicuous.
     execute "highlight! VertSplit ctermfg=" . l:margin_fg . " ctermbg=" . l:margin_fg
 
@@ -38,6 +35,9 @@ endfunction
 
 " Save original margin settings.
 function! s:save_old_margins()
+    if &modifiable == 0
+        return
+    endif
     " Save previous settings, so they can be restored when appropriate.
     let s:prev_number = &number
     let s:prev_relativenumber = &relativenumber
@@ -48,6 +48,9 @@ endfunction
 
 " Determine new margin settings.
 function! s:calculate_new_margins()
+    if &modifiable == 0
+        return
+    endif
     if exists('g:focus_width')
         let l:focus_width = max([g:focus_width, &textwidth])
     else
@@ -65,6 +68,9 @@ endfunction
 
 " Set margins to offset/center the text area.
 function! s:set_margins()
+    if &modifiable == 0
+        return
+    endif
     if s:number == 0
         setlocal nonumber
     else
@@ -82,6 +88,9 @@ endfunction
 
 " Revert margins to the original settings.
 function! s:reset_margins()
+    if &modifiable == 0
+        return
+    endif
     if s:prev_number == 0
         setlocal nonumber
     else
@@ -108,7 +117,7 @@ function! s:focus_on()
     augroup focus
         autocmd!
         autocmd ColorScheme * call <SID>patch_colorscheme()
-        autocmd VimResized  * call <SID>calculate_new_margins() | call <SID>set_margins()
+        autocmd VimResized,WinEnter  * call <SID>calculate_new_margins() | call <SID>set_margins()
         autocmd BufNewFile,BufWinEnter * call <SID>set_margins()
     augroup END
 
