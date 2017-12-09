@@ -24,6 +24,9 @@ function! s:patch_colorscheme()
     " Make split dividers less conspicuous.
     execute "highlight! VertSplit ctermfg=" . l:margin_fg . " ctermbg=" . l:margin_fg
 
+    " Make folded lines less conspicuous.
+    highlight! link Folded Normal
+
     " Make TODO, FIXME, etc. stand out.
     highlight Todo term=reverse cterm=reverse ctermfg=5
 endfunction
